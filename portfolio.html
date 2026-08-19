@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Sakthi Priya G — Security-Minded Software Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+<style>
+  :root{
+    --paper:#eef1ec;
+    --paper-2:#e5e9e2;
+    --ink:#14181c;
+    --muted:#5b6570;
+    --line:#cdd4c8;
+    --card:#fbfcfa;
+    --signal:#1f6f54;
+    --signal-dim:#e4ede8;
+    --alert:#a8461f;
+    --alert-dim:#f3e6de;
+    --display:'Fraunces', serif;
+    --body:'Inter', sans-serif;
+    --mono:'JetBrains Mono', monospace;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--body);
+    font-size:15.5px;
+    line-height:1.65;
+  }
+  ::selection{background:var(--signal);color:#fff;}
+
+  /* faint grid texture, dossier feel */
+  .grid-tex{
+    position:fixed; inset:0; pointer-events:none; z-index:0;
+    background-image:
+      linear-gradient(var(--line) 1px, transparent 1px),
+      linear-gradient(90deg, var(--line) 1px, transparent 1px);
+    background-size: 64px 64px;
+    opacity:0.25;
+    mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 30%, transparent 75%);
+  }
+
+  a{color:inherit;}
+
+  /* LAYOUT: sidebar + main */
+  .app{ display:grid; grid-template-columns: 280px 1fr; min-height:100vh; position:relative; z-index:1;}
+
+  /* SIDEBAR */
+  .sidebar{
+    position:sticky; top:0; height:100vh;
+    border-right:1px solid var(--line);
+    padding:2.5rem 2rem;
+    display:flex; flex-direction:column;
+    background:var(--paper);
+  }
+  .mark{
+    width:44px;height:44px;
+    border:1.5px solid var(--ink);
+    border-radius:50%;
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono); font-weight:700; font-size:13px;
+    margin-bottom:2rem;
+    position:relative;
+  }
+  .mark::after{
+    content:'';
+    position:absolute; inset:-5px;
+    border:1px dashed var(--signal);
+    border-radius:50%;
+    opacity:0.5;
+  }
+  .side-name{
+    font-family:var(--display);
+    font-weight:600;
+    font-size:1.35rem;
+    letter-spacing:-0.01em;
+    margin-bottom:0.15rem;
+  }
+  .side-role{
+    font-family:var(--mono);
+    font-size:11px;
+    color:var(--signal);
+    text-transform:uppercase;
+    letter-spacing:0.06em;
+    margin-bottom:2.5rem;
+  }
+  .side-nav{ display:flex; flex-direction:column; gap:0.15rem; margin-bottom:auto; }
+  .side-nav a{
+    text-decoration:none;
+    font-family:var(--mono);
+    font-size:12.5px;
+    color:var(--muted);
+    padding:0.5rem 0;
+    display:flex; align-items:center; gap:10px;
+    border-bottom:1px solid transparent;
+    transition:color .15s;
+  }
+  .side-nav a:hover{ color:var(--ink); }
+  .side-nav a .idx{ color:var(--line); font-weight:600; }
+  .side-nav a:hover .idx{ color:var(--signal); }
+
+  .status-block{
+    margin-top:2.5rem;
+    padding-top:1.25rem;
+    border-top:1px solid var(--line);
+  }
+  .status-line{
+    display:flex; align-items:center; gap:8px;
+    font-family:var(--mono); font-size:11px; color:var(--muted);
+    margin-bottom:0.6rem;
+  }
+  .dot{ width:6px; height:6px; border-radius:50%; background:var(--signal); box-shadow:0 0 0 3px var(--signal-dim); }
+  .side-contact{ display:flex; flex-direction:column; gap:0.5rem; margin-top:1rem; }
+  .side-contact a{
+    font-family:var(--mono); font-size:11px; color:var(--muted); text-decoration:none;
+  }
+  .side-contact a:hover{ color:var(--signal); }
+
+  /* MAIN */
+  main{ padding:0; }
+  section{ padding:5.5rem 4.5rem; border-bottom:1px solid var(--line); position:relative; }
+  .ref{
+    font-family:var(--mono); font-size:11px; color:var(--muted);
+    letter-spacing:0.08em; text-transform:uppercase;
+    display:flex; align-items:center; gap:10px; margin-bottom:1rem;
+  }
+  .ref::before{ content:''; width:20px; height:1px; background:var(--signal); }
+  h2{
+    font-family:var(--display); font-weight:600;
+    font-size:clamp(1.9rem, 2.6vw, 2.5rem);
+    letter-spacing:-0.01em; margin-bottom:2.75rem; max-width:14ch; line-height:1.15;
+  }
+
+  /* HERO */
+  .hero{ padding:5.5rem 4.5rem 4.5rem; }
+  .hero-top{
+    display:flex; justify-content:space-between; align-items:flex-start; gap:2rem; margin-bottom:3rem;
+    flex-wrap:wrap;
+  }
+  .hero h1{
+    font-family:var(--display); font-weight:600;
+    font-size:clamp(2.4rem, 4.6vw, 4.1rem);
+    line-height:1.06; letter-spacing:-0.02em;
+    max-width:11ch;
+  }
+  .hero h1 em{ font-style:italic; color:var(--signal); font-weight:500; }
+  .hero-brief{
+    max-width:280px; font-size:14px; color:var(--muted);
+    padding-top:0.4rem;
+  }
+  .hero-brief .k{ font-family:var(--mono); font-size:11px; color:var(--ink); display:block; margin-bottom:0.3rem; letter-spacing:0.04em; }
+
+  .stamp-row{ display:flex; gap:1.5rem; flex-wrap:wrap; margin:2.5rem 0 3rem; }
+  .stamp{
+    border:1.5px dashed var(--signal);
+    border-radius:8px;
+    padding:0.7rem 1.1rem;
+    transform:rotate(-1.5deg);
+    font-family:var(--mono);
+  }
+  .stamp:nth-child(2){ transform:rotate(1deg); border-color:var(--alert); }
+  .stamp:nth-child(3){ transform:rotate(-0.5deg); }
+  .stamp:nth-child(4){ transform:rotate(1.5deg); border-color:var(--alert); }
+  .stamp .n{ font-size:1.5rem; font-weight:700; line-height:1; }
+  .stamp:nth-child(2) .n, .stamp:nth-child(4) .n{ color:var(--alert); }
+  .stamp:nth-child(1) .n, .stamp:nth-child(3) .n{ color:var(--signal); }
+  .stamp .l{ font-size:9.5px; text-transform:uppercase; letter-spacing:0.07em; color:var(--muted); margin-top:2px; }
+
+  .cta-row{ display:flex; gap:0.9rem; flex-wrap:wrap; }
+  .btn{
+    font-family:var(--mono); font-size:12.5px; font-weight:500;
+    padding:0.75rem 1.4rem; border-radius:3px; text-decoration:none;
+    display:inline-flex; align-items:center; gap:8px;
+    transition:all .15s;
+  }
+  .btn-solid{ background:var(--ink); color:var(--paper); }
+  .btn-solid:hover{ background:var(--signal); }
+  .btn-line{ border:1px solid var(--ink); color:var(--ink); }
+  .btn-line:hover{ border-color:var(--signal); color:var(--signal); }
+
+  /* ABOUT */
+  .about-wrap{ display:grid; grid-template-columns:1.1fr 0.9fr; gap:3.5rem; }
+  .about-copy p{ color:var(--muted); margin-bottom:1.1rem; font-size:15px; max-width:52ch; }
+  .about-copy strong{ color:var(--ink); font-weight:600; }
+  .skill-list{ display:flex; flex-direction:column; }
+  .skill-row{
+    display:grid; grid-template-columns:110px 1fr; gap:1rem;
+    padding:0.9rem 0; border-top:1px solid var(--line);
+    align-items:baseline;
+  }
+  .skill-row:last-child{ border-bottom:1px solid var(--line); }
+  .skill-cat{ font-family:var(--mono); font-size:11px; color:var(--signal); text-transform:uppercase; letter-spacing:0.05em; }
+  .skill-val{ font-size:13.5px; color:var(--ink); }
+
+  /* EXPERIENCE */
+  .log-item{
+    display:grid; grid-template-columns:150px 1fr; gap:2rem;
+    padding:1.75rem 0; border-top:1px solid var(--line);
+  }
+  .log-item:last-child{ border-bottom:1px solid var(--line); }
+  .log-date{ font-family:var(--mono); font-size:11.5px; color:var(--muted); padding-top:0.15rem; }
+  .log-title{ font-family:var(--display); font-weight:600; font-size:1.15rem; margin-bottom:0.3rem; }
+  .log-org{ font-family:var(--mono); font-size:11px; color:var(--signal); text-transform:uppercase; letter-spacing:0.04em; margin-bottom:0.6rem; }
+  .log-desc{ font-size:14px; color:var(--muted); max-width:56ch; }
+
+  /* PROJECTS */
+  .proj-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1.25rem; }
+  .proj-card{
+    background:var(--card); border:1px solid var(--line); border-radius:6px;
+    padding:1.75rem; display:flex; flex-direction:column;
+    transition:border-color .15s, transform .15s;
+  }
+  .proj-card:hover{ border-color:var(--signal); transform:translateY(-2px); }
+  .proj-id{ font-family:var(--mono); font-size:10.5px; color:var(--muted); margin-bottom:1rem; }
+  .proj-title{ font-family:var(--display); font-weight:600; font-size:1.05rem; margin-bottom:0.7rem; line-height:1.25; }
+  .proj-desc{ font-size:13px; color:var(--muted); flex:1; margin-bottom:1.2rem; }
+  .proj-tags{ display:flex; flex-wrap:wrap; gap:6px; }
+  .ptag{ font-family:var(--mono); font-size:10px; padding:3px 8px; border:1px solid var(--line); border-radius:20px; color:var(--muted); }
+
+  /* ACHIEVEMENTS — disclosure log style */
+  .adv-table{ width:100%; border-collapse:collapse; }
+  .adv-table th{
+    font-family:var(--mono); font-size:10px; text-transform:uppercase; letter-spacing:0.06em;
+    color:var(--muted); text-align:left; padding-bottom:0.9rem; border-bottom:1px solid var(--ink);
+    font-weight:500;
+  }
+  .adv-table td{ padding:1.1rem 0; border-bottom:1px solid var(--line); vertical-align:top; }
+  .adv-table tr:hover td{ background:var(--paper-2); }
+  .sev{
+    font-family:var(--mono); font-size:10px; font-weight:700; text-transform:uppercase;
+    padding:3px 9px; border-radius:3px; letter-spacing:0.04em; display:inline-block;
+  }
+  .sev-critical{ background:var(--alert-dim); color:var(--alert); }
+  .sev-high{ background:var(--signal-dim); color:var(--signal); }
+  .sev-med{ background:#eee; color:var(--muted); }
+  .adv-name{ font-weight:600; font-size:14px; margin-bottom:2px; }
+  .adv-org{ font-size:12px; color:var(--muted); }
+  .adv-rank{ font-family:var(--mono); font-size:13px; }
+
+  /* CERTS */
+  .cert-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:0; border-top:1px solid var(--line); border-left:1px solid var(--line); }
+  .cert-cell{
+    border-right:1px solid var(--line); border-bottom:1px solid var(--line);
+    padding:1.1rem 1.3rem;
+  }
+  .cert-cell .c-name{ font-size:13px; font-weight:500; margin-bottom:4px; }
+  .cert-cell .c-issuer{ font-family:var(--mono); font-size:10px; color:var(--signal); text-transform:uppercase; letter-spacing:0.04em; }
+
+  /* CONTACT */
+  .contact-sec{ text-align:left; }
+  .contact-big{ font-family:var(--display); font-weight:600; font-size:clamp(1.8rem,3.5vw,3rem); max-width:16ch; margin-bottom:2.5rem; line-height:1.1; }
+  .contact-grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line); border:1px solid var(--line); }
+  .contact-cell{ background:var(--paper); padding:1.5rem; text-decoration:none; transition:background .15s; }
+  .contact-cell:hover{ background:var(--card); }
+  .contact-cell .lbl{ font-family:var(--mono); font-size:10px; color:var(--muted); text-transform:uppercase; letter-spacing:0.05em; margin-bottom:0.5rem; display:block; }
+  .contact-cell .val{ font-size:13.5px; font-weight:500; word-break:break-word; }
+
+  footer{ padding:2rem 4.5rem; font-family:var(--mono); font-size:11px; color:var(--muted); display:flex; justify-content:space-between; }
+
+  @media (max-width: 980px){
+    .app{ grid-template-columns:1fr; }
+    .sidebar{ position:relative; height:auto; border-right:none; border-bottom:1px solid var(--line); }
+    section, .hero{ padding:3rem 1.5rem; }
+    .about-wrap{ grid-template-columns:1fr; }
+    .proj-grid{ grid-template-columns:1fr; }
+    .cert-grid{ grid-template-columns:1fr 1fr; }
+    .contact-grid{ grid-template-columns:1fr 1fr; }
+    .log-item{ grid-template-columns:1fr; gap:0.5rem; }
+    footer{ flex-direction:column; gap:0.5rem; padding:2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+<div class="grid-tex"></div>
+<div class="app">
+
+  <aside class="sidebar">
+    <div>
+      <div class="mark">SP</div>
+      <div class="side-name">Sakthi Priya G</div>
+      <div class="side-role">Cyber Security &amp; Full-Stack</div>
+    </div>
+    <nav class="side-nav">
+      <a href="#about"><span class="idx">01</span> About</a>
+      <a href="#experience"><span class="idx">02</span> Experience</a>
+      <a href="#projects"><span class="idx">03</span> Projects</a>
+      <a href="#achievements"><span class="idx">04</span> Disclosures &amp; CTF</a>
+      <a href="#certifications"><span class="idx">05</span> Certifications</a>
+      <a href="#contact"><span class="idx">06</span> Contact</a>
+    </nav>
+    <div class="status-block">
+      <div class="status-line"><span class="dot"></span> Open to SDE / Full-Stack roles</div>
+      <div class="side-contact">
+        <a href="mailto:sakthipriyaganesh52@gmail.com">sakthipriyaganesh52@gmail.com</a>
+        <a href="tel:+916382687088">+91 63826 87088</a>
+        <a href="https://github.com/SakthiPriya1003" target="_blank">github.com/SakthiPriya1003</a>
+        <a href="https://linkedin.com/in/sakthi-priya-g" target="_blank">linkedin.com/in/sakthi-priya-g</a>
+      </div>
+    </div>
+  </aside>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="hero-top">
+        <h1>Building software with a <em>security-first</em> eye.</h1>
+        <div class="hero-brief">
+          <span class="k">Summary</span>
+          Final-year CSE (Cyber Security) student at PSNA College of Engineering and Technology, shipping full-stack applications and finding real vulnerabilities in production systems.
+        </div>
+      </div>
+
+      <div class="stamp-row">
+        <div class="stamp"><div class="n">2</div><div class="l">Bugcrowd Hall of Fame</div></div>
+        <div class="stamp"><div class="n">7</div><div class="l">CTF placements</div></div>
+        <div class="stamp"><div class="n">3</div><div class="l">Internships</div></div>
+        <div class="stamp"><div class="n">8.34</div><div class="l">CGPA</div></div>
+      </div>
+
+      <div class="cta-row">
+        <a href="mailto:sakthipriyaganesh52@gmail.com" class="btn btn-solid">Get in touch →</a>
+        <a href="https://github.com/SakthiPriya1003" target="_blank" class="btn btn-line">View GitHub</a>
+        <a href="https://linkedin.com/in/sakthi-priya-g" target="_blank" class="btn btn-line">LinkedIn</a>
+      </div>
+    </section>
+
+    <section id="about">
+      <div class="ref">Ref 01 — Profile</div>
+      <h2>Who I am</h2>
+      <div class="about-wrap">
+        <div class="about-copy">
+          <p>I'm a <strong>B.E. CSE (Cyber Security)</strong> student at PSNA College of Engineering and Technology (2023–2027), currently holding an <strong>8.27 CGPA</strong>. My work sits at the intersection of building software and breaking it responsibly.</p>
+          <p>Through internships and independent research I've picked up hands-on experience in <strong>vulnerability assessment</strong>, <strong>full-stack development</strong>, and <strong>data analytics</strong>. I've been recognised twice in the <strong>Bugcrowd Hall of Fame</strong> for responsible disclosure, and regularly place in national and international CTF competitions.</p>
+          <p>Outside coursework, I lead the <strong>OWASP Student Chapter</strong> at PSNACET and convene the college <strong>Aptitude Club</strong>, running sessions for 60+ students. Off-screen, I play chess and carrom.</p>
+        </div>
+        <div class="skill-list">
+          <div class="skill-row"><div class="skill-cat">Languages</div><div class="skill-val">Java, JavaScript, SQL, Python</div></div>
+          <div class="skill-row"><div class="skill-cat">Frontend</div><div class="skill-val">React.js, HTML5, CSS3</div></div>
+          <div class="skill-row"><div class="skill-cat">Backend / DB</div><div class="skill-val">REST APIs, Node.js, MongoDB, MySQL</div></div>
+          <div class="skill-row"><div class="skill-cat">Security</div><div class="skill-val">Vulnerability assessment, OSINT, CTF exploitation</div></div>
+          <div class="skill-row"><div class="skill-cat">Data &amp; Tools</div><div class="skill-val">Power BI, Git, Postman</div></div>
+          <div class="skill-row"><div class="skill-cat">Core CS</div><div class="skill-val">DSA, OOP, DBMS, OS, Networks</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience">
+      <div class="ref">Ref 02 — Work log</div>
+      <h2>Internships</h2>
+
+      <div class="log-item">
+        <div class="log-date">JUL – AUG 2025</div>
+        <div>
+          <div class="log-title">Data Analytics Intern</div>
+          <div class="log-org">Inspire Softech Solutions</div>
+          <div class="log-desc">Cleaned, analysed, and visualised datasets using Python and Power BI, contributing to dashboards used for data-driven decision making.</div>
+        </div>
+      </div>
+      <div class="log-item">
+        <div class="log-date">AUG – SEP 2024</div>
+        <div>
+          <div class="log-title">Python Intern</div>
+          <div class="log-org">Octanet Services</div>
+          <div class="log-desc">Built a modular ATM simulation system in Python, strengthening core programming and structured problem-solving skills.</div>
+        </div>
+      </div>
+      <div class="log-item">
+        <div class="log-date">AUG 2024</div>
+        <div>
+          <div class="log-title">Cybersecurity Intern</div>
+          <div class="log-org">Prompt Infotech</div>
+          <div class="log-desc">Performed vulnerability assessments and security analysis on live applications, gaining hands-on exposure to application security tooling and fundamentals.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects">
+      <div class="ref">Ref 03 — Selected work</div>
+      <h2>Projects</h2>
+      <div class="proj-grid">
+        <div class="proj-card">
+          <div class="proj-id">PROJ / 01 — Full Stack</div>
+          <div class="proj-title">Student Request Management System</div>
+          <div class="proj-desc">A role-based MERN application automating academic request workflows — JWT auth, RBAC, multi-level approval routing, and real-time email notifications.</div>
+          <div class="proj-tags">
+            <span class="ptag">MERN</span><span class="ptag">JWT / RBAC</span><span class="ptag">Postman</span><span class="ptag">MongoDB</span>
+          </div>
+        </div>
+        <div class="proj-card">
+          <div class="proj-id">PROJ / 02 — Research</div>
+          <div class="proj-title">Rice Leaf Disease Detection</div>
+          <div class="proj-desc">Image classification model built on a Swin Transformer architecture, reaching 98.21% accuracy. Co-authored paper published at ICCSCE 2025, Atlantis Press.</div>
+          <div class="proj-tags">
+            <span class="ptag">PyTorch</span><span class="ptag">Swin Transformer</span><span class="ptag">Published</span>
+          </div>
+        </div>
+        <div class="proj-card">
+          <div class="proj-id">PROJ / 03 — Python</div>
+          <div class="proj-title">ATM Simulation System</div>
+          <div class="proj-desc">A modular banking application handling withdrawals, deposits, and balance checks, with input validation and structured edge-case handling.</div>
+          <div class="proj-tags">
+            <span class="ptag">Python</span><span class="ptag">Modular design</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="achievements">
+      <div class="ref">Ref 04 — Disclosure &amp; competition log</div>
+      <h2>Achievements</h2>
+      <table class="adv-table">
+        <thead>
+          <tr><th style="width:14%">Status</th><th>Record</th><th style="width:22%">Source</th><th style="width:16%">Scope</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="sev sev-critical">Verified</span></td>
+            <td><div class="adv-name">Bugcrowd Hall of Fame — Genius</div><div class="adv-org">Responsible vulnerability disclosure</div></td>
+            <td class="adv-org">Bugcrowd VDP</td>
+            <td class="adv-rank">International</td>
+          </tr>
+          <tr>
+            <td><span class="sev sev-critical">Verified</span></td>
+            <td><div class="adv-name">Bugcrowd Hall of Fame — Telstra Health</div><div class="adv-org">Responsible vulnerability disclosure</div></td>
+            <td class="adv-org">Bugcrowd VDP</td>
+            <td class="adv-rank">International</td>
+          </tr>
+          <tr>
+            <td><span class="sev sev-high">Rank 3rd</span></td>
+            <td><div class="adv-name">SPARC Virtual CTF 2026</div><div class="adv-org">IEEE Signal Processing Society, BMS Institute</div></td>
+            <td class="adv-org">CTF</td>
+            <td class="adv-rank">National</td>
+          </tr>
+          <tr>
+            <td><span class="sev sev-high">Rank 4th</span></td>
+            <td><div class="adv-name">RootAccess CTF 2026</div><div class="adv-org">REVELATION 5.0, IIEST Shibpur</div></td>
+            <td class="adv-org">CTF</td>
+            <td class="adv-rank">National</td>
+          </tr>
+          <tr>
+            <td><span class="sev sev-med">Rank 57th</span></td>
+            <td><div class="adv-name">Crate CTF 2025</div><div class="adv-org">Swedish Defence Research Institute (FOI)</div></td>
+            <td class="adv-org">CTF · 300+ teams</td>
+            <td class="adv-rank">International</td>
+          </tr>
+          <tr>
+            <td><span class="sev sev-med">Top 30</span></td>
+            <td><div class="adv-name">Hacker's Gambit 2025</div><div class="adv-org">Jaihind College of Engineering, Maharashtra</div></td>
+            <td class="adv-org">CTF · 200+ teams</td>
+            <td class="adv-rank">International</td>
+          </tr>
+          <tr>
+            <td><span class="sev sev-med">Top 40</span></td>
+            <td><div class="adv-name">ExploitX CTF: Into the Void 2025</div><div class="adv-org">Chennai Institute of Technology</div></td>
+            <td class="adv-org">CTF</td>
+            <td class="adv-rank">National</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section id="certifications">
+      <div class="ref">Ref 05 — Coursework</div>
+      <h2>Certifications</h2>
+      <div class="cert-grid">
+        <div class="cert-cell"><div class="c-name">Cybersecurity Essentials</div><div class="c-issuer">Cisco Networking Academy</div></div>
+        <div class="cert-cell"><div class="c-name">Introduction to Cyber Security</div><div class="c-issuer">Cisco Networking Academy</div></div>
+        <div class="cert-cell"><div class="c-name">Foundations of Cybersecurity</div><div class="c-issuer">Coursera</div></div>
+        <div class="cert-cell"><div class="c-name">Manage Security Risks</div><div class="c-issuer">Coursera</div></div>
+        <div class="cert-cell"><div class="c-name">Fundamentals of Information Security</div><div class="c-issuer">Infosys Springboard</div></div>
+        <div class="cert-cell"><div class="c-name">Cybercrime Investigations Bootcamp</div><div class="c-issuer">Prompt Infotech</div></div>
+        <div class="cert-cell"><div class="c-name">Java Programming</div><div class="c-issuer">IIT Bombay</div></div>
+        <div class="cert-cell"><div class="c-name">PHP and MySQL</div><div class="c-issuer">IIT Bombay</div></div>
+        <div class="cert-cell"><div class="c-name">MongoDB Basics for Students</div><div class="c-issuer">MongoDB University</div></div>
+        <div class="cert-cell"><div class="c-name">ns-3 Network Simulator</div><div class="c-issuer">IIT Bombay</div></div>
+        <div class="cert-cell"><div class="c-name">Introduction to Generative AI</div><div class="c-issuer">ServiceNow</div></div>
+        <div class="cert-cell"><div class="c-name">Zoho Creator Student Training</div><div class="c-issuer">Zoho Young Creators Program</div></div>
+      </div>
+    </section>
+
+    <section id="contact" class="contact-sec">
+      <div class="ref">Ref 06 — Contact</div>
+      <div class="contact-big">Open to SDE and Full-Stack Developer roles — let's talk.</div>
+      <div class="contact-grid">
+        <a class="contact-cell" href="mailto:sakthipriyaganesh52@gmail.com"><span class="lbl">Email</span><span class="val">sakthipriyaganesh52@gmail.com</span></a>
+        <a class="contact-cell" href="tel:+916382687088"><span class="lbl">Phone</span><span class="val">+91 63826 87088</span></a>
+        <a class="contact-cell" href="https://linkedin.com/in/sakthi-priya-g" target="_blank"><span class="lbl">LinkedIn</span><span class="val">sakthi-priya-g</span></a>
+        <a class="contact-cell" href="https://github.com/SakthiPriya1003" target="_blank"><span class="lbl">GitHub</span><span class="val">SakthiPriya1003</span></a>
+      </div>
+    </section>
+
+    <footer>
+      <span>© 2025 Sakthi Priya G</span>
+      <span>PSNA College of Engineering and Technology · Dindigul</span>
+    </footer>
+  </main>
+</div>
+</body>
+</html>
